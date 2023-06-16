@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { Edit } from 'lucide-react'
+// import Image from 'next/image'
+import { Edit3 } from 'lucide-react'
+import Avatar from './Avatar'
 
 /* eslint-disable @next/next/no-img-element */
 export default function Sidebar() {
@@ -12,13 +13,7 @@ export default function Sidebar() {
         alt=""
       />
       <div className="-mt-8 flex flex-col items-center">
-        <Image
-          className="box-content rounded-lg border-4 border-zinc-900 outline outline-2 outline-green-400"
-          width={50}
-          height={50}
-          src={'https://avatars.githubusercontent.com/u/50453597?v=4'}
-          alt=""
-        />
+        <Avatar avatarSrc="https://avatars.githubusercontent.com/u/50453597?v=4" />
         <strong className="mt-4 leading-relaxed text-zinc-50">
           Matheus Kaúlly
         </strong>
@@ -29,7 +24,7 @@ export default function Sidebar() {
           href="#"
           className="bold flex h-[58px] w-[212px] items-center justify-center gap-2 rounded-lg border border-green-400 text-green-400 transition-colors hover:bg-green-400 hover:text-zinc-50"
         >
-          <Edit size={20} />
+          <Edit3 size={20} />
           Editar seu perfil
         </Link>
       </footer>

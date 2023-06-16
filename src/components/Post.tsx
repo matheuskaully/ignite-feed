@@ -1,4 +1,6 @@
-import Image from 'next/image'
+import Form from './Form'
+import Comment from './Comment'
+import Avatar from './Avatar'
 
 export default function Post() {
   return (
@@ -7,13 +9,7 @@ export default function Post() {
         {/* author */}
         <div className="flex items-center gap-4">
           {/* avatar */}
-          <Image
-            className="box-content rounded-lg border-4 border-zinc-900 outline outline-2 outline-green-400"
-            width={50}
-            height={50}
-            src={'https://avatars.githubusercontent.com/u/50453597?v=4'}
-            alt=""
-          />
+          <Avatar avatarSrc="https://avatars.githubusercontent.com/u/50453597?v=4" />
           {/* author info */}
           <div className="flex flex-col justify-center">
             <strong className="leading-relaxed">Matheus Kaúlly</strong>
@@ -68,6 +64,13 @@ export default function Post() {
             #rocketseat
           </a>
         </p>
+      </div>
+      <Form />
+      {/* CommentList */}
+      <div className="mt-8">
+        <Comment />
+        <Comment />
+        <Comment />
       </div>
     </article>
   )
