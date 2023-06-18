@@ -2,7 +2,21 @@
 import { ThumbsUp, Trash2 } from 'lucide-react'
 import Avatar from './Avatar'
 
-export default function Comment() {
+interface CommentProps {
+  content: string
+  commentedDateRelativeToNow: string
+  onDeleteComment: Function
+}
+
+export default function Comment({
+  content,
+  commentedDateRelativeToNow,
+  onDeleteComment,
+}: CommentProps) {
+  function handleDeleteComment() {
+    onDeleteComment(content)
+  }
+
   return (
     // Comment
     <div className="mt-6 flex gap-4">
@@ -14,30 +28,28 @@ export default function Comment() {
       <div className="flex flex-col">
         {/* CommentContent */}
         <div className="rounded-lg bg-zinc-800 p-4">
-          <header className="flex items-start justify-between">
+          <header className="flex items-start justify-between gap-2">
             {/* AuthorAndTime */}
             <div className="flex flex-col">
               <strong className="text-sm leading-relaxed">
                 Matheus Kaúlly
               </strong>
               <time
-                title="14 de Junho às 12:01h"
-                dateTime="2023-06-14 12:01:22"
+                title={commentedDateRelativeToNow}
                 className="text-xs leading-relaxed text-zinc-500"
               >
-                Cerca de 1h atrás
+                {commentedDateRelativeToNow}
               </time>
             </div>
             <button
+              onClick={handleDeleteComment}
               className="rounded-sm border-none text-zinc-500 transition-colors hover:text-red-500"
               title="Deletar comentário"
             >
               <Trash2 size={24} />
             </button>
           </header>
-          <p className="mt-4 text-sm text-zinc-400">
-            Muito bom Devon, parabéns!! 👏👏
-          </p>
+          <p className="mt-4 text-sm text-zinc-400">{content}</p>
         </div>
         <footer className="mt-4">
           <button className="flex items-center rounded-sm border-none text-sm text-gray-500 transition-colors hover:text-green-400">
