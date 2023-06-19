@@ -1,14 +1,14 @@
-/* eslint-disable array-callback-return */
 'use client'
+/* eslint-disable array-callback-return */
 
 import Comment from './Comment'
 import Avatar from './Avatar'
 import ptBR from 'date-fns/locale/pt-BR'
 import { format, formatDistanceToNow } from 'date-fns'
-import { useState } from 'react'
+import { useState, ChangeEvent, FormEvent, InvalidEvent } from 'react'
 
 interface Content {
-  type: string
+  type: 'paragraph' | 'link'
   content: string
 }
 interface PostProps {
@@ -30,8 +30,6 @@ export default function Post({ author, content, publishedAt }: PostProps) {
     },
   )
 
-  // console.log(format(new Date(), "'Cerca de' LLLL 'às' HH:mm"))
-
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
     addSuffix: true,
@@ -42,17 +40,14 @@ export default function Post({ author, content, publishedAt }: PostProps) {
     addSuffix: true,
   })
 
-  const [comments, setComments] = useState<string[]>([])
-
-  const [newCommentText, setNewCommentText] = useState<string>('')
-
-  function handleCreateNewComment(event: any) {
+  function handleCreateNewComment(event: FormEvent) {
     event.preventDefault()
     setComments([...comments, newCommentText])
     setNewCommentText('')
   }
 
-  function handleNewCommentChange(event: any) {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
   }
 
@@ -62,6 +57,16 @@ export default function Post({ author, content, publishedAt }: PostProps) {
     })
     setComments(commentWithoutDeleteOne)
   }
+
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity('Este campo é obrigatório!')
+  }
+
+  const [comments, setComments] = useState<string[]>([])
+
+  const [newCommentText, setNewCommentText] = useState<string>('')
+
+  const isNewCommentEmpty = newCommentText.length === 0
 
   return (
     <article className="mb-2 rounded-lg bg-zinc-900 p-10">
@@ -123,12 +128,15 @@ export default function Post({ author, content, publishedAt }: PostProps) {
           name="comment"
           onChange={handleNewCommentChange}
           value={newCommentText}
+          required
+          onInvalid={handleNewCommentInvalid}
           className="mt-4 h-24 w-full resize-none rounded-lg border-none bg-zinc-950 p-4 leading-[1.4rem] placeholder:text-zinc-600"
           placeholder="Deixe um comentário"
         />
         <footer className="hidden group-focus-within:block">
           <button
-            className="mt-4 cursor-pointer rounded-lg border-none bg-green-500 px-6 py-4 font-bold transition-colors hover:bg-green-400"
+            disabled={isNewCommentEmpty}
+            className="mt-4 cursor-pointer rounded-lg border-none bg-green-500 px-6 py-4 font-bold transition-colors hover:bg-green-400 disabled:cursor-not-allowed disabled:bg-green-500 disabled:opacity-70"
             type="submit"
           >
             Publicar

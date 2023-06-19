@@ -1,11 +1,12 @@
 /* eslint-disable no-octal-escape */
 import { ThumbsUp, Trash2 } from 'lucide-react'
 import Avatar from './Avatar'
+import { useState } from 'react'
 
 interface CommentProps {
   content: string
   commentedDateRelativeToNow: string
-  onDeleteComment: Function
+  onDeleteComment: (comment: string) => void
 }
 
 export default function Comment({
@@ -16,6 +17,14 @@ export default function Comment({
   function handleDeleteComment() {
     onDeleteComment(content)
   }
+
+  function handleLikeComment() {
+    setLikeCount((state) => {
+      return state + 1
+    })
+  }
+
+  const [likeCount, setLikeCount] = useState(0)
 
   return (
     // Comment
@@ -52,12 +61,17 @@ export default function Comment({
           <p className="mt-4 text-sm text-zinc-400">{content}</p>
         </div>
         <footer className="mt-4">
-          <button className="flex items-center rounded-sm border-none text-sm text-gray-500 transition-colors hover:text-green-400">
+          <button
+            onClick={handleLikeComment}
+            className="flex items-center rounded-sm border-none text-sm text-gray-500 transition-colors hover:text-green-400"
+          >
             <ThumbsUp size={20} className="mr-2" />
             Aplaudir{' '}
-            <span className="before:px-1 before:py-0 before:content-['\2022']">
-              20
-            </span>
+            {likeCount > 0 && (
+              <span className="before:px-1 before:py-0 before:content-['\2022']">
+                {likeCount}
+              </span>
+            )}
           </button>
         </footer>
       </div>

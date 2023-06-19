@@ -1,5 +1,4 @@
 import Link from 'next/link'
-// import Image from 'next/image'
 import { Edit3 } from 'lucide-react'
 import Avatar from './Avatar'
 
