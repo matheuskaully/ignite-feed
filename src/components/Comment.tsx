@@ -6,7 +6,7 @@ import { useState } from 'react'
 interface CommentProps {
   content: string
   commentedDateRelativeToNow: string
-  onDeleteComment: (comment: string) => void
+  onDeleteComment: (content: string) => void
 }
 
 export default function Comment({

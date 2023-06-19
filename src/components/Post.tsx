@@ -8,7 +8,7 @@ import { format, formatDistanceToNow } from 'date-fns'
 import { useState, ChangeEvent, FormEvent, InvalidEvent } from 'react'
 
 interface Content {
-  type: 'paragraph' | 'link'
+  type: string
   content: string
 }
 interface PostProps {
